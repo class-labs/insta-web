@@ -1,0 +1,25 @@
+{
+  "name": "full-stack",
+  "scripts": {
+    "start": "npm --prefix frontend start",
+    "seed": "npm --prefix server run seed",
+    "start:server": "npm --prefix server start",
+    "test": "npm --prefix server test && npm --prefix frontend test",
+    "postinstall": "npm --prefix server install && npm --prefix frontend install"
+  },
+  "stackblitz": {
+    "startCommand": "npm run seed && npm start"
+  },
+  "dependencies": {
+    "xcurl": "^1.8.3"
+  },
+  "devDependencies": {
+    "prettier": "^2.7.1"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "all",
+    "arrowParens": "always"
+  },
+  "private": true
+}
