@@ -1,5 +1,6 @@
-// TODO: Import this from constants or use .env
-const API_HOST = 'https://insta.web-api.dev';
+require('dotenv').config();
+
+const API_HOST = process.env.REACT_APP_API_HOST ?? '';
 
 module.exports = {
   client: {
