@@ -11,8 +11,10 @@ import { BottomNav } from '../components/BottomNav';
 import { GET_POSTS } from '../queries/queries';
 import { Post } from '../queries/types';
 
+// TODO: Generate this
 type GetPosts = {
   posts: Array<Post>;
+  me: { id: string } | null;
 };
 
 export function Feed() {
@@ -36,6 +38,7 @@ export function Feed() {
     return <CircularProgress />;
   }
 
+  const userId = data?.me?.id ?? null;
   const posts = data?.posts ?? [];
 
   return (
@@ -53,7 +56,7 @@ export function Feed() {
             </IconButton>
           }
         />
-        <PostList posts={posts} />
+        <PostList userId={userId} posts={posts} />
       </Stack>
       <Stack flex={1} />
       <BottomNav />
@@ -61,8 +64,8 @@ export function Feed() {
   );
 }
 
-function PostList(props: { posts: Array<Post> }) {
-  const { posts } = props;
+function PostList(props: { userId: string | null; posts: Array<Post> }) {
+  const { userId, posts } = props;
   useEffect(() => {
     const initialScrollPosition = sessionStorage.getItem(
       'feed-scroll-position',
@@ -74,7 +77,7 @@ function PostList(props: { posts: Array<Post> }) {
   return (
     <>
       {posts?.map((post) => (
-        <FeedPost key={post.id} post={post} />
+        <FeedPost key={post.id} userId={userId} post={post} />
       ))}
     </>
   );

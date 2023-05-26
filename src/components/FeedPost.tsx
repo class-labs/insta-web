@@ -1,15 +1,17 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { Stack, Typography, IconButton } from '@mui/material';
+import { Stack, Typography, IconButton, Box } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 import { FixedRatioImage } from './FixedRatioImage';
 import { AuthorHeader } from './AuthorHeader';
 import { RelativeTimeView } from './RelativeTimeView';
 
-import { LIKE_POST, GET_POSTS } from '../queries/queries';
+import { LIKE_POST, GET_POSTS, DELETE_POST } from '../queries/queries';
+import { PopoverMenu } from './PopoverMenu';
 
 type Post = {
   id: string;
@@ -27,13 +29,17 @@ type Post = {
 };
 
 type Props = {
+  userId: string | null;
   post: Post;
 };
 
 export function FeedPost(props: Props) {
-  const { post } = props;
+  const { userId, post } = props;
   const navigate = useNavigate();
   const [likePost] = useMutation(LIKE_POST, {
+    refetchQueries: [{ query: GET_POSTS }, 'GetPosts'],
+  });
+  const [deletePost] = useMutation(DELETE_POST, {
     refetchQueries: [{ query: GET_POSTS }, 'GetPosts'],
   });
 
@@ -68,6 +74,20 @@ export function FeedPost(props: Props) {
           >
             <ChatBubbleOutlineIcon sx={{ color: 'black' }} />
           </IconButton>
+          <Box sx={{ flex: 1 }} />
+          {userId === post.author.id ? (
+            <PopoverMenu
+              icon={<MoreVertIcon sx={{ color: 'black' }} />}
+              items={[
+                {
+                  label: 'Delete',
+                  onClick: () => {
+                    deletePost({ variables: { postId: post.id } });
+                  },
+                },
+              ]}
+            />
+          ) : null}
         </Stack>
         <Typography>
           {post.likeCount} {post.likeCount === 1 ? 'like' : 'likes'}

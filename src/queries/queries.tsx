@@ -16,6 +16,9 @@ export const GET_POSTS = gql`
       }
       createdAt
     }
+    me {
+      id
+    }
   }
 `;
 
@@ -63,5 +66,11 @@ export const LIKE_POST = gql`
       likeCount
       isLikedByViewer
     }
+  }
+`;
+
+export const DELETE_POST = gql`
+  mutation DeletePost($postId: String!) {
+    deletePost(postId: $postId)
   }
 `;
