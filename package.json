@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "start": "vite",
+    "start:prod": "serve -s -n --no-request-logging dist",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write src",
     "format:check": "prettier --check src",
@@ -32,6 +33,7 @@
     "eslint": "^8.41.0",
     "eslint-config-react-app": "^7.0.1",
     "prettier": "^2.7.1",
+    "serve": "^14.2.0",
     "ts-node": "^10.9.1",
     "typescript": "^4.8.3",
     "vite": "^4.3.9"
