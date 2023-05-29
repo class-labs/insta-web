@@ -12,6 +12,8 @@ import { RelativeTimeView } from './RelativeTimeView';
 
 import { LIKE_POST, GET_POSTS, DELETE_POST } from '../queries/queries';
 import { PopoverMenu } from './PopoverMenu';
+import { LikePost, LikePostVariables } from '../__generated__/LikePost';
+import { DeletePost, DeletePostVariables } from '../__generated__/DeletePost';
 
 type Post = {
   id: string;
@@ -36,12 +38,15 @@ type Props = {
 export function FeedPost(props: Props) {
   const { userId, post } = props;
   const navigate = useNavigate();
-  const [likePost] = useMutation(LIKE_POST, {
+  const [likePost] = useMutation<LikePost, LikePostVariables>(LIKE_POST, {
     refetchQueries: [{ query: GET_POSTS }, 'GetPosts'],
   });
-  const [deletePost] = useMutation(DELETE_POST, {
-    refetchQueries: [{ query: GET_POSTS }, 'GetPosts'],
-  });
+  const [deletePost] = useMutation<DeletePost, DeletePostVariables>(
+    DELETE_POST,
+    {
+      refetchQueries: [{ query: GET_POSTS }, 'GetPosts'],
+    },
+  );
 
   return (
     <Stack>

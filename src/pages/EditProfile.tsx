@@ -4,6 +4,11 @@ import { CircularProgress, Stack } from '@mui/material';
 
 import { EditProfileForm } from '../components/EditProfileForm';
 import { PageHeader } from '../components/PageHeader';
+import { GetMyProfile } from '../__generated__/GetMyProfile';
+import {
+  UpdateMyProfile,
+  UpdateMyProfileVariables,
+} from '../__generated__/UpdateMyProfile';
 
 const GET_MY_PROFILE = gql`
   query GetMyProfile {
@@ -35,17 +40,17 @@ const UPDATE_MY_PROFILE = gql`
 
 export function EditProfile() {
   const navigate = useNavigate();
-  const { data, loading } = useQuery(GET_MY_PROFILE, {
+  const { data, loading } = useQuery<GetMyProfile>(GET_MY_PROFILE, {
     fetchPolicy: 'cache-and-network',
   });
-  const [updateUser, { loading: isSaving, error }] = useMutation(
-    UPDATE_MY_PROFILE,
-    {
-      onCompleted: () => {
-        navigate('/my-profile');
-      },
+  const [updateUser, { loading: isSaving, error }] = useMutation<
+    UpdateMyProfile,
+    UpdateMyProfileVariables
+  >(UPDATE_MY_PROFILE, {
+    onCompleted: () => {
+      navigate('/my-profile');
     },
-  );
+  });
   if (loading) {
     return <CircularProgress />;
   }

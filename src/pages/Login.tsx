@@ -12,6 +12,7 @@ import {
 
 import { useAuth } from '../support/Auth';
 import { PageHeader } from '../components/PageHeader';
+import { Login as LoginType, LoginVariables } from '../__generated__/Login';
 
 const LOGIN = gql`
   mutation Login($username: String!, $password: String!) {
@@ -32,7 +33,7 @@ export function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [login, { loading }] = useMutation(LOGIN, {
+  const [login, { loading }] = useMutation<LoginType, LoginVariables>(LOGIN, {
     onCompleted: (data) => {
       const result = data.login;
       if (result) {

@@ -15,6 +15,7 @@ import { PhotoUpload } from '../components/PhotoUpload';
 import { Avatar } from '../components/Avatar';
 import { FixedRatioImage } from '../components/FixedRatioImage';
 import { useSnackbar } from '../components/Snackbar';
+import { Signup as SignupType, SignupVariables } from '../__generated__/Signup';
 
 const SIGNUP = gql`
   mutation Signup(
@@ -47,18 +48,21 @@ export function Signup() {
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [signup, { loading }] = useMutation(SIGNUP, {
-    onError: (error) => {
-      // TODO: Think of a better user-facing error message
-      setErrorMessage('Mutation failed');
-      // The error will contain some addition details in the GraphQL response. It might be worth looking in to how we can extract better details to show the user.
-      console.log(error);
+  const [signup, { loading }] = useMutation<SignupType, SignupVariables>(
+    SIGNUP,
+    {
+      onError: (error) => {
+        // TODO: Think of a better user-facing error message
+        setErrorMessage('Mutation failed');
+        // The error will contain some addition details in the GraphQL response. It might be worth looking in to how we can extract better details to show the user.
+        console.log(error);
+      },
+      onCompleted: (data) => {
+        showSnackbar('success', 'Signup successful.');
+        navigate('/login');
+      },
     },
-    onCompleted: (data) => {
-      showSnackbar('success', 'Signup successful.');
-      navigate('/login');
-    },
-  });
+  );
   const isValid = password === password2;
   return (
     <Stack sx={{ minHeight: '100vh' }}>

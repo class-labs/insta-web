@@ -11,6 +11,7 @@ import {
 
 import { PageHeader } from '../components/PageHeader';
 import { PhotoUpload } from '../components/PhotoUpload';
+import { CreatePost, CreatePostVariables } from '../__generated__/CreatePost';
 
 const CREATE_POST = gql`
   mutation CreatePost($caption: String!, $photo: String!) {
@@ -25,7 +26,10 @@ export function NewPost() {
   const [photoUrl, setPhotoUrl] = useState('');
   const [caption, setCaption] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [createPost, { loading }] = useMutation(CREATE_POST, {
+  const [createPost, { loading }] = useMutation<
+    CreatePost,
+    CreatePostVariables
+  >(CREATE_POST, {
     onCompleted: (data) => {
       console.log('Completed:', data);
       navigate('/');

@@ -9,13 +9,8 @@ import { PageHeader } from '../components/PageHeader';
 import { BottomNav } from '../components/BottomNav';
 
 import { GET_POSTS } from '../queries/queries';
-import { Post } from '../queries/types';
-
-// TODO: Generate this
-type GetPosts = {
-  posts: Array<Post>;
-  me: { id: string } | null;
-};
+import { GetPosts } from '../__generated__/GetPosts';
+import { GetPosts_posts as Post } from '../__generated__/GetPosts';
 
 export function Feed() {
   const navigate = useNavigate();

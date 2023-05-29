@@ -8,6 +8,8 @@ import { useSnackbar } from '../components/Snackbar';
 import { PageHeader } from '../components/PageHeader';
 import { Profile } from '../components/Profile';
 import { BottomNav } from '../components/BottomNav';
+import { GetMyUserId } from '../__generated__/GetMyUserId';
+import { Logout } from '../__generated__/Logout';
 
 const GET_MY_USER_ID = gql`
   query GetMyUserId {
@@ -27,8 +29,8 @@ export function MyProfile() {
   const navigate = useNavigate();
   const { setAuthToken } = useAuth();
   const { showSnackbar } = useSnackbar();
-  const { data, loading } = useQuery(GET_MY_USER_ID);
-  const [logout] = useMutation(LOGOUT, {
+  const { data, loading } = useQuery<GetMyUserId>(GET_MY_USER_ID);
+  const [logout] = useMutation<Logout>(LOGOUT, {
     onCompleted: () => {
       setAuthToken(null);
       showSnackbar('success', 'You have been logged out');

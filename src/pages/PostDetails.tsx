@@ -13,7 +13,12 @@ import { CommentForm } from '../components/CommentForm';
 import { AuthorHeader } from '../components/AuthorHeader';
 
 import { GET_POST, CREATE_COMMENT, LIKE_POST } from '../queries/queries';
-import type { GetPost } from '../queries/types';
+import { GetPost } from '../__generated__/GetPost';
+import {
+  CreateComment,
+  CreateCommentVariables,
+} from '../__generated__/CreateComment';
+import { LikePost, LikePostVariables } from '../__generated__/LikePost';
 
 export function PostDetails() {
   const params = useParams();
@@ -24,13 +29,13 @@ export function PostDetails() {
     variables: { postId },
     fetchPolicy: 'cache-and-network',
   });
-  const [createComment, { loading: sendingComment }] = useMutation(
-    CREATE_COMMENT,
-    {
-      refetchQueries: [{ query: GET_POST }, 'GetPost'],
-    },
-  );
-  const [likePost] = useMutation(LIKE_POST, {
+  const [createComment, { loading: sendingComment }] = useMutation<
+    CreateComment,
+    CreateCommentVariables
+  >(CREATE_COMMENT, {
+    refetchQueries: [{ query: GET_POST }, 'GetPost'],
+  });
+  const [likePost] = useMutation<LikePost, LikePostVariables>(LIKE_POST, {
     refetchQueries: [{ query: GET_POST }, 'GetPost'],
   });
   if (loading && !data) {
