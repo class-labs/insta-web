@@ -7,8 +7,7 @@
     "format": "prettier --write src",
     "format:check": "prettier --check src",
     "lint": "eslint --max-warnings 0 --ext ts --ext tsx src",
-    "jest": "react-scripts test --watchAll=false",
-    "test": "npm run lint && npm run typecheck && npm run format:check && npm run jest"
+    "test": "npm run lint && npm run typecheck && npm run format:check"
   },
   "dependencies": {
     "@apollo/client": "^3.6.9",
@@ -22,10 +21,6 @@
     "react-router-dom": "^6.4.1"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
     "@types/node": "^16.11.59",
     "@types/react": "^18.0.20",
     "@types/react-dom": "^18.0.6",
@@ -37,8 +32,7 @@
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "react-app/jest"
+      "react-app"
     ]
   },
   "prettier": {
