@@ -30,6 +30,9 @@ export function NewPost() {
       console.log('Completed:', data);
       navigate('/');
     },
+    onError: (error) => {
+      setErrorMessage(String(error));
+    },
   });
   return (
     <Stack sx={{ minHeight: '100vh' }}>

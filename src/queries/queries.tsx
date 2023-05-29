@@ -58,6 +58,10 @@ export const CREATE_COMMENT = gql`
 
 export const LIKE_POST = gql`
   mutation LikePost($postId: String!) {
-    likePost(postId: $postId)
+    likePost(postId: $postId) {
+      id
+      likeCount
+      isLikedByViewer
+    }
   }
 `;

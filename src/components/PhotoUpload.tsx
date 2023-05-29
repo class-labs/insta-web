@@ -1,7 +1,11 @@
 import { useState, ReactElement } from 'react';
 import { Button, CircularProgress, Stack } from '@mui/material';
 
+import { API_HOST } from '../support/constants';
 import { FixedRatioImage } from './FixedRatioImage';
+
+// TODO: Do not hard-code this
+const CDN_HOST = 'https://skrnds.web-api.dev';
 
 type State =
   | { state: 'no-photo' }
@@ -26,7 +30,7 @@ export function PhotoUpload(props: Props) {
           buttonVariant={buttonVariant ?? 'contained'}
           onFileSelect={async (file) => {
             setState({ state: 'uploading' });
-            const response = await fetch('/images', {
+            const response = await fetch(API_HOST + '/images', {
               method: 'POST',
               headers: { 'content-type': file.type },
               body: file,
@@ -43,7 +47,8 @@ export function PhotoUpload(props: Props) {
       return <CircularProgress />;
     }
     case 'photo': {
-      const src = state.url;
+      const { url } = state;
+      const src = url.startsWith('/') ? CDN_HOST + url : url;
       return renderPhoto ? renderPhoto(src) : <FixedRatioImage src={src} />;
     }
   }
